@@ -9,11 +9,14 @@
 
 
 // creating the random number 
-let numberPick = [1,2,3,4,5,6,7,8,9]
 
-numberPick.sort(()=> (Math.random() -0.5))
+function randomNumberNoRepeat() {
+    let numberPick = [1,2,3,4,5,6,7,8,9]
+    return numberPick.sort(()=> (Math.random() -0.5)).join("").slice(0,4)
+}
 
-console.log(numberPick);
+
+console.log(randomNumberNoRepeat());
 
 
 
