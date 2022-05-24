@@ -8,25 +8,30 @@ const prompt = require("prompt-sync")({ sigint: true });
 // console.log(`User's input is: ${name}`);
 
 // creating the random number
-let rulesMessage = `Gameplay looks so: you enter your guess code, computer compares it with the secret code and gives you two clues: numbers of "bulls" and "cows". What does this mean? A bull is a digit which is present in both the codes in the same position. And a cow is a digit which is present in both the codes in the different position. For example, if the secret code is 2056 and you ask 9516, an answer will be "one bull and one cow" (but you won't know which digit is a bull and which digit is a cow). That's all!`
+let rulesMessage = `Gameplay looks so: you enter your guess code, computer compares it with the secret code and gives you two clues: numbers of "bulls" and "cows". What does this mean? A bull is a digit which is present in both the codes in the same position. And a cow is a digit which is present in both the codes in the different position. For example, if the secret code is 2056 and you ask 9516, an answer will be "one bull and one cow" (but you won't know which digit is a bull and which digit is a cow). That's all!`;
 
-let cheerRandomMessage = ["Just a friendly reminder that I believe in you.","I predict a big win at the next guess","Crossing my fingers for you! Go, go, go",]
+let cheerRandomMessage = [
+  "Just a friendly reminder that I believe in you.",
+  "I predict a big win at the next guess",
+  "Crossing my fingers for you! Go, go, go",
+];
 
 function randomMessage() {
-  return cheerRandomMessage[Math.floor(Math.random() * cheerRandomMessage.length)]
+  return cheerRandomMessage[
+    Math.floor(Math.random() * cheerRandomMessage.length)
+  ];
 }
-
+let findTheUser = prompt("what's your name: ");
 function askForTheRules() {
-  let findTheUser = prompt("what's your name: ");
-  let question = prompt("Do you know the rules of the game Y/N: ")
-  if (question.toUpperCase()=== "N") {
-    console.log(rulesMessage);
-  }else {
-    console.log(`Let´s go ${findTheUser}`);
-  }
   
+  let question = prompt("Do you know the rules of the game Y/N: ");
+  console.clear()
+  if (question.toUpperCase() === "N") {
+    console.log(`\n${rulesMessage}\n\nLet´s go ${findTheUser}`);
+  } else {
+    console.log(`\nLet´s go ${findTheUser}`);
+  }
 }
-
 
 function getRandomNumberNoRepeat(level) {
   let numberPick = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -40,20 +45,20 @@ function levelSelector() {
   let level = prompt("choose your level easy,medium,hard,extreme: ");
   if (level.toLowerCase() === "easy") {
     level = 4;
-    console.log(`guess a ${level} digit number`);
+    console.log(`\nguess a ${level} digit number`);
   } else if (level.toLowerCase() === "medium") {
     level = 6;
-    console.log(`guess a ${level} digit number`);
+    console.log(`\nguess a ${level} digit number`);
   } else if (level.toLowerCase() === "hard") {
     level = 7;
-    console.log(`guess a ${level} digit number`);
+    console.log(`\nguess a ${level} digit number`);
   } else if (level.toLowerCase() === "extreme") {
     level = 9;
-    console.log(`guess a ${level} digit number`);
+    console.log(`\nguess a ${level} digit number`);
   } else {
     level = false;
     console.log(
-      "the level should be: easy,medium,hard or extreme! check for typos!"
+      "\nthe level should be: easy,medium,hard or extreme! check for typos!"
     );
   }
   return level;
@@ -63,7 +68,7 @@ function playAgain() {
   if (playAgainTheGame.toUpperCase() === "Y") {
     return start();
   } else {
-    console.log("Thanks for playing");
+    console.log("\n Thanks for playing");
   }
 }
 function validGuess(guess, randomNumberNoRepeat) {
@@ -94,7 +99,7 @@ function playTheGame(level) {
     attempts++;
     guess = prompt("number:");
     if (randomNumberNoRepeat === guess) {
-      console.log(`you won after ${attempts} attempts`);
+      console.log(attempts === 1 ? `you won at your first attempt well done ${findTheUser}` : `You won after ${attempts} attempts very well done ${findTheUser} `);
       break;
     }
     if (!validGuess(guess, randomNumberNoRepeat)) {
@@ -114,15 +119,15 @@ function playTheGame(level) {
       }
     }
     if (bulls === 0 && cows === 0) {
-      console.log(randomMessage());
+      console.log("\n", randomMessage(),"\n");
     }
-    console.log("cows = " + cows);
-    console.log("bulls = " + bulls);
+    console.log(cows === 1 ? `You found ${cows} cow` : `You found ${cows} cows `);
+    console.log(bulls === 1 ? `You found ${bulls} bulls` : `You found ${bulls} bulls `);
   }
 }
 
 function start() {
-  askForTheRules()
+  askForTheRules();
   let level = levelSelector();
   while (level === false) {
     level = levelSelector();
