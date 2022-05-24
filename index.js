@@ -1,37 +1,20 @@
-// Bulls and Cows
-// Get library for user input
-// we need to keep the next line, so we can prompt the user for input
 const prompt = require("prompt-sync")({ sigint: true });
-
-// Test that prompt is working
-// let name = prompt("What is your name? ");
-// console.log(`User's input is: ${name}`);
-
-// creating the random number
+let level = "";
+// storing variables
 let rulesMessage = `Gameplay looks so: you enter your guess code, computer compares it with the secret code and gives you two clues: numbers of "bulls" and "cows". What does this mean? A bull is a digit which is present in both the codes in the same position. And a cow is a digit which is present in both the codes in the different position. For example, if the secret code is 2056 and you ask 9516, an answer will be "one bull and one cow" (but you won't know which digit is a bull and which digit is a cow). That's all!`;
 
-let cheerRandomMessage = [
+
+let cheerMessage = [
   "Just a friendly reminder that I believe in you.",
   "I predict a big win at the next guess",
   "Crossing my fingers for you! Go, go, go",
 ];
 
-function randomMessage() {
-  return cheerRandomMessage[
-    Math.floor(Math.random() * cheerRandomMessage.length)
-  ];
-}
 let findTheUser = prompt("what's your name: ");
-function askForTheRules() {
-  
-  let question = prompt("Do you know the rules of the game Y/N: ");
-  console.clear()
-  if (question.toUpperCase() === "N") {
-    console.log(`\n${rulesMessage}\n\nLet´s go ${findTheUser}`);
-  } else {
-    console.log(`\nLet´s go ${findTheUser}`);
-  }
-}
+
+
+
+//1st function generate a random number without repetitive number the length of the number is given from the user 
 
 function getRandomNumberNoRepeat(level) {
   let numberPick = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -40,9 +23,9 @@ function getRandomNumberNoRepeat(level) {
     .join("")
     .slice(0, level);
 }
-
+// 2nd function specifies the level of the game the level value will be used in the 1st function 
 function levelSelector() {
-  let level = prompt("choose your level easy,medium,hard,extreme: ");
+   level = prompt("choose your level easy,medium,hard,extreme: ");
   if (level.toLowerCase() === "easy") {
     level = 4;
     console.log(`\nguess a ${level} digit number`);
@@ -63,6 +46,26 @@ function levelSelector() {
   }
   return level;
 }
+
+// 3rd function will ask the user if knows the rules 
+
+function askForTheRules() {
+  let question = prompt("Do you know the rules of the game Y/N: ");
+  console.clear()
+  if (question.toUpperCase() === "N") {
+    console.log(`\n${rulesMessage}\n\nLet´s go ${findTheUser}`);
+  } else {
+    console.log(`\nLet´s go ${findTheUser}`);
+  }
+}
+// 4th function generate a random message from the array:cheerMessage
+function randomMessage() {
+  return cheerMessage[
+    Math.floor(Math.random() * cheerMessage.length)
+  ];
+}
+
+// 5th function ask the user if he want to play again if not greeting message
 function playAgain() {
   let playAgainTheGame = prompt("Do you want to play again? Y/N: ");
   if (playAgainTheGame.toUpperCase() === "Y") {
@@ -71,6 +74,10 @@ function playAgain() {
     console.log("\n Thanks for playing");
   }
 }
+
+// 6th function checks for repetitive numbers in users input if it's true it will ask  again for valid number
+
+// also it will check if the length of the secret number is the same as from the user if not it will ask again for the valid number
 function validGuess(guess, randomNumberNoRepeat) {
   let noRepeatInputCheck = guess.split("").sort((a, b) => a - b);
   let hasDuplicates = false;
@@ -80,11 +87,11 @@ function validGuess(guess, randomNumberNoRepeat) {
     }
   }
   if (hasDuplicates === true) {
-    console.log("no valid number");
+    console.log("Check your number!!Remember each number should be unique");
     return false;
   }
   if (randomNumberNoRepeat.length !== guess.length) {
-    console.log("not valid number");
+    console.log(`Not valid number,you need ${level} digit number`);
     return false;
   }
   return true;
