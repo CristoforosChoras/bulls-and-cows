@@ -96,27 +96,32 @@ function validGuess(guess, randomNumberNoRepeat) {
   }
   return true;
 }
+// 7th function  pass as parameter the level of the user every time the while loop runs it count as an attempt
 
 function playTheGame(level) {
-  let randomNumberNoRepeat = getRandomNumberNoRepeat(level);
+  let secretNumber = getRandomNumberNoRepeat(level);
   let attempts = 0;
-  console.log(randomNumberNoRepeat);
-
+  console.log(secretNumber);
   while (true) {
     attempts++;
     guess = prompt("number:");
-    if (randomNumberNoRepeat === guess) {
+    // if the guess is the same number as the secretNumber then you won message will be print and also the attempts
+    if (secretNumber === guess) {
       console.log(attempts === 1 ? `you won at your first attempt well done ${findTheUser}` : `You won after ${attempts} attempts very well done ${findTheUser} `);
       break;
     }
-    if (!validGuess(guess, randomNumberNoRepeat)) {
+    // calling the function that check for the user input if follow the rules of the game 
+    if (!validGuess(guess, secretNumber)) {
       continue;
     }
+    // check and count the secretNumber if has same number as the users input
+    // if the number is in the same position  then it will count a bull 
+    // if the numbers is included in the guess but in different position it will count as a cow 
     let cows = 0;
     let bulls = 0;
-    for (let i = 0; i < randomNumberNoRepeat.length; i++) {
+    for (let i = 0; i < secretNumber.length; i++) {
       for (let j = 0; j < guess.length; j++) {
-        if (randomNumberNoRepeat[i] === guess[j]) {
+        if (secretNumber[i] === guess[j]) {
           if (i === j) {
             bulls++;
           } else {
@@ -125,14 +130,16 @@ function playTheGame(level) {
         } else continue;
       }
     }
+    // if the user dont find anything then it will print a random cheer message 
     if (bulls === 0 && cows === 0) {
       console.log("\n", randomMessage(),"\n");
     }
-    console.log(cows === 1 ? `You found ${cows} cow` : `You found ${cows} cows `);
-    console.log(bulls === 1 ? `You found ${bulls} bulls` : `You found ${bulls} bulls `);
+    console.log(cows === 1 ? `You found ${cows} cow &&` : `You found ${cows} cows &&`,bulls === 1 ? `You found ${bulls} bulls` : `You found ${bulls} bulls `);
+    
   }
 }
 
+// calling the functions and start the game 
 function start() {
   askForTheRules();
   let level = levelSelector();
