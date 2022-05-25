@@ -16,10 +16,7 @@ askForTheRules();
 
 function getRandomNumberNoRepeat(level) {
   let numberPick = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-  return numberPick
-    .sort(() => Math.random() - 0.5)
-    .join("")
-    .slice(0, level);
+  return numberPick.sort(() => Math.random() - 0.5).join("").slice(0, level);
 }
 // 2nd function specifies the level of the game the level value will be used in the 1st function
 function levelSelector() {
