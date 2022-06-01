@@ -100,6 +100,9 @@ function validGuess(guess, randomNumberNoRepeat) {
   if (randomNumberNoRepeat.length !== guess.length) {
     console.log(`Not valid number,you need ${level} digit number!!!Let's go ${findTheUser}`);
     return false;
+  }if (!/^\d+$/.test(guess)) {
+    console.log(`only numbers are allowed!!!!Let's go ${findTheUser}`);
+    return false
   }
   return true;
 }
@@ -107,6 +110,7 @@ function validGuess(guess, randomNumberNoRepeat) {
 
 function playTheGame(level) {
   let secretNumber = getRandomNumberNoRepeat(level);
+  console.log(secretNumber);
   let attempts = 0;
   console.log("\n");
   while (true) {
